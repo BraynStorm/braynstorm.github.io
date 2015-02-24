@@ -1,0 +1,8 @@
+eclipse.preferences.version=1
+entityReference=\#ffff80 | null | false | true | false | false
+html_content_assist_default_page_sort_order=org.eclipse.wst.html.ui.proposalCategory.htmlTags\u0000org.eclipse.wst.css.ui.proposalCategory.css\u0000org.eclipse.wst.html.ui.proposalCategory.htmlTemplates\u0000org.eclipse.wst.css.ui.proposalCategory.cssTemplates\u0000
+html_content_assist_own_page_sort_order=org.eclipse.wst.html.ui.proposalCategory.htmlTemplates\u0000org.eclipse.wst.css.ui.proposalCategory.cssTemplates\u0000org.eclipse.wst.html.ui.proposalCategory.htmlTags\u0000org.eclipse.wst.css.ui.proposalCategory.css\u0000
+org.eclipse.wst.sse.ui.custom_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates><template autoinsert\="true" context\="html_new" deleted\="false" description\="html 5" enabled\="true" id\="org.eclipse.wst.html.ui.templates.html5" name\="New HTML File (5)">&lt;\!DOCTYPE html&gt;\r\n&lt;html&gt;\r\n\t&lt;head&gt;\r\n\t\t&lt;meta charset\="${encoding}"&gt;\r\n\t\t&lt;title&gt;Insert title here&lt;/title&gt;\r\n\t&lt;/head&gt;\r\n\t&lt;body&gt;\r\n\t\t${cursor}\r\n\t&lt;/body&gt;\r\n&lt;/html&gt;</template></templates>
+tagAttributeName=\#9dfb9b | null | false | false | false | false
+tagAttributeValue=\#9179ff | null | false | false | false | false
+tagName=\#00bda6 | null | false | false | false | false

@@ -1,0 +1,11 @@
+@CHARSET "UTF-8";
+
+body{
+	background-color: #;
+}
+
+#mainCircle{
+	stroke: black;
+	stroke-width: 1;
+	border: 1px red;
+}
