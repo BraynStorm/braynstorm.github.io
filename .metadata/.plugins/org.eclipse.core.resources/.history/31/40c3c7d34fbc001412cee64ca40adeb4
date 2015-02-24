@@ -97,12 +97,6 @@ $(document).ready(function (){
 		fill: tgColor
 	});
 	
-	cotgTxt.attr({
-		x: beginX + (radius / 2),
-		y : beginY - radius - 10,
-		fill: cotgColor
-	});
-	
 	
 	var angle = 0;
 	

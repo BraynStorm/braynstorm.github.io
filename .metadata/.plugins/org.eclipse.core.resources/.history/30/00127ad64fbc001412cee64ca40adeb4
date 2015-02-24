@@ -97,10 +97,10 @@ $(document).ready(function (){
 		fill: tgColor
 	});
 	
-	cotgTxt.attr({
+	tgTxt.attr({
 		x: beginX + (radius / 2),
 		y : beginY - radius - 10,
-		fill: cotgColor
+		fill: tgColor
 	});
 	
 	

@@ -70,8 +70,7 @@ $(document).ready(function (){
 		x1: 0,
 		y1: beginY - radius,
 		x2: window.innerWidth,
-		y2: beginY - radius,
-		stroke: cotgColor
+		y2: beginY - radius
 	});
 	
 	angleArm.attr({
@@ -81,27 +80,15 @@ $(document).ready(function (){
 	
 	sinTxt.attr({
 		x: beginX + 10,
-		y: beginY - radius - 10,
+		y: 50,
 		fill: sinColor
 	});
 	
 	cosTxt.attr({
-		x: beginX + radius + 10,
-		y: beginY - 10,
+		x: beginX + radius + 20,
+		y: beginY - 15,
 		fill: cosColor
 	})
-	
-	tgTxt.attr({
-		x: beginX + radius + 10,
-		y: beginY - (radius/2),
-		fill: tgColor
-	});
-	
-	cotgTxt.attr({
-		x: beginX + (radius / 2),
-		y : beginY - radius - 10,
-		fill: cotgColor
-	});
 	
 	
 	var angle = 0;

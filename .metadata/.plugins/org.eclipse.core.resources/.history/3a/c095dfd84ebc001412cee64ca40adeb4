@@ -4,11 +4,7 @@ $(document).ready(function (){
 	var beginY		= window.innerHeight/2;
 	
 	
-	var sinColor = "#00AA00";
-	var cosColor = "#0000AA";
-	var tgColor = "#00AAAA";
-	var cotgColor = "#AA0000";
-	
+	var sinColor = "#00F0F0";
 	
 	var radius		= 350;
 	
@@ -44,8 +40,7 @@ $(document).ready(function (){
 		x1: beginX,
 		y1: 0,
 		x2: beginX,
-		y2: window.innerHeight,
-		stroke: sinColor
+		y2: window.innerHeight
 	});
 	
 	
@@ -53,8 +48,7 @@ $(document).ready(function (){
 		x1: 0,
 		y1: beginY,
 		x2: window.innerWidth,
-		y2: beginY,
-		stroke: cosColor
+		y2: beginY
 	});
 	
 	
@@ -62,16 +56,14 @@ $(document).ready(function (){
 		x1: beginX + radius,
 		y1: 0,
 		x2: beginX + radius,
-		y2: window.innerHeight,
-		stroke: tgColor
+		y2: window.innerHeight
 	});
 	
 	cotgAxis.attr({
 		x1: 0,
 		y1: beginY - radius,
 		x2: window.innerWidth,
-		y2: beginY - radius,
-		stroke: cotgColor
+		y2: beginY - radius
 	});
 	
 	angleArm.attr({
@@ -81,27 +73,10 @@ $(document).ready(function (){
 	
 	sinTxt.attr({
 		x: beginX + 10,
-		y: beginY - radius - 10,
+		y: 50,
 		fill: sinColor
 	});
 	
-	cosTxt.attr({
-		x: beginX + radius + 10,
-		y: beginY - 10,
-		fill: cosColor
-	})
-	
-	tgTxt.attr({
-		x: beginX + radius + 10,
-		y: beginY - (radius/2),
-		fill: tgColor
-	});
-	
-	cotgTxt.attr({
-		x: beginX + (radius / 2),
-		y : beginY - radius - 10,
-		fill: cotgColor
-	});
 	
 	
 	var angle = 0;

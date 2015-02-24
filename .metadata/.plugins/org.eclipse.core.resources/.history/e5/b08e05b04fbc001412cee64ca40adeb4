@@ -93,14 +93,7 @@ $(document).ready(function (){
 	
 	tgTxt.attr({
 		x: beginX + radius + 10,
-		y: beginY - (radius/2),
-		fill: tgColor
-	});
-	
-	cotgTxt.attr({
-		x: beginX + (radius / 2),
-		y : beginY - radius - 10,
-		fill: cotgColor
+		y: beginY + (radius/2) + 10
 	});
 	
 	

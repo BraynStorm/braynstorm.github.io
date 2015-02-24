@@ -24,7 +24,13 @@
 				<text id="cotgTxt" style="font-size:25px;">cotg</text>
 
 
-				<!--  THE ANGLE -->
+				<!--  THE ANGLE
+
+				<line id="sinLine" style="stroke:rgb(0,0,0);stroke-width:2;" />
+				<line id="cosLine" style="stroke:rgb(0,0,0);stroke-width:2;" />
+				<line id="sinLine" style="stroke:rgb(0,0,0);stroke-width:2;" />
+				<line id="sinLine" style="stroke:rgb(0,0,0);stroke-width:2;" />
+				 -->
 				 
 				<line id="angleArm" style="stroke:rgb(0,0,0);stroke-width:2;" />
 				<path id="angleArc" stroke="grey" stroke-width="5" fill="none"/>
