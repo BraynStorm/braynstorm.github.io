@@ -1,0 +1,19 @@
+@CHARSET "UTF-8";
+
+body{
+	background-color: #;
+	padding: 0;
+	margin: 0;
+}
+
+svg{
+	margin-top: 0px;
+}
+
+#angleBox{
+	position: absolute;
+	top: 600px;
+}
+#stupid{
+	left : 200px;
+}

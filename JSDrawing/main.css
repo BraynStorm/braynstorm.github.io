@@ -1,19 +1,17 @@
 @CHARSET "UTF-8";
 
 body{
-	background-color: #;
+	background-color: #CCC;
 	padding: 0;
 	margin: 0;
+	overflow: hidden;
 }
 
 svg{
 	margin-top: 0px;
 }
 
-#angleBox, #stupid{
-	position: absolute;
-	top: 600px;
-}
-#stupid{
-	left : 200px;
+#angleBox{
+	position: fixed;
+	bottom: 10px;
 }
