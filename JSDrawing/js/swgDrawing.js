@@ -34,6 +34,8 @@ $(document).ready(function (){
 	var projectionSin = $("#projectionSin");
 	var projectionCos = $("#projectionCos");
 	
+	var projectionSinTxt = $("#projectionSinTxt");
+	var projectionCosTxt = $("#projectionCosTxt");
 	radiusBox.keypress(function (){
 		init();
 	});
@@ -131,15 +133,20 @@ $(document).ready(function (){
 			stroke: cosColor
 		});
 		
+		
 	};
 	
 	showAdditions.click(function (){
 		if(showAdditions.is(":checked")){
 			projectionSin.attr("stroke-width","2");
 			projectionCos.attr("stroke-width","2");
+			projectionSinTxt.attr("fill", sinColor);
+			projectionCosTxt.attr("fill", cosColor);
 		}else{
 			projectionSin.attr("stroke-width","0");
 			projectionCos.attr("stroke-width","0");
+			projectionSinTxt.attr("fill", "none");
+			projectionCosTxt.attr("fill", "none");
 		}
 	});
 	
@@ -162,8 +169,14 @@ $(document).ready(function (){
 		
 		var radians = angle * (Math.PI / 180);
 		
-		x = beginX + (Math.cos(radians) * radius);
-		y = beginY - (Math.sin(radians) * radius);
+		var cos = Math.cos(radians);
+		var sin = Math.sin(radians);
+		
+		x = beginX + (cos * radius);
+		y = beginY - (sin * radius);
+		
+		var xb = beginX + (cos * radius * 4);
+		var yb = beginY - (sin * radius * 4);
 		
 		projectionCos.attr({
 			x2: x,
@@ -178,10 +191,20 @@ $(document).ready(function (){
 		});
 		
 		
-		angleArm.attr("x2", x);
-		angleArm.attr("y2", y);
+		projectionSinTxt.attr({
+			x: x+10,
+			y: (beginY - Math.abs(beginY - y) / 2) + (parseInt(projectionSinTxt.css("font-size")) / 2)
+		}).html(parseInt(cos*100)/100);
 		
-		angleArc.attr("d", describeArc(beginX, beginY, 50, 90-angle, 90));
+		projectionCosTxt.attr({
+			x: (beginX + Math.abs(beginX - x) / 2) - 10,
+			y: y - 10
+		}).html(parseInt(sin*100)/100);
+		
+		angleArm.attr("x2", xb);
+		angleArm.attr("y2", yb);
+		
+		angleArc.attr("d", describeArc(beginX, beginY, radius/5, 90-angle, 90));
 		
 		
 		animator = setTimeout(animateAngle, 15);

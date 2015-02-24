@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<section name="PHPDLTKSearchPage">
+		<item value="0" key="HISTORY_SIZE"/>
+		<item value="false" key="CASE_SENSITIVE"/>
+	</section>
 	<section name="org.eclipse.php.internal.ui.explorer.PHPExplorerPart">
 		<item value="1" key="layout"/>
 		<item value="true" key="group_libraries"/>

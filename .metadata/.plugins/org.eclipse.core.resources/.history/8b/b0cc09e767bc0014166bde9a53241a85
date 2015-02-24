@@ -1,0 +1,24 @@
+@CHARSET "UTF-8";
+
+body{
+	background-color: #CCC;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+	font-family: Droid Sans, mono, sans-serif;
+}
+
+svg{
+	margin-top: 0px;
+}
+
+
+#menu{
+	position: fixed;
+	bottom: 0px;
+	left:0px;
+
+	height: 50px;
+	width : 100%;
+	border : 1px solid black;
+}
