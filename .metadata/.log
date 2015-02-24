@@ -2060,3 +2060,6 @@ Binding(CTRL+SHIFT+ARROW_DOWN,
 
 !ENTRY org.eclipse.ui 4 4 2015-02-24 17:50:22.364
 !MESSAGE Conflicting handlers for org.eclipse.ui.navigate.backwardHistory: {ActionHandler(org.eclipse.ui.internal.dialogs.PreferencePageHistory$1@4309d83d)} vs {ActionHandler(org.eclipse.ui.internal.NavigationHistoryAction@59a2bed1)}
+
+!ENTRY org.eclipse.ui 4 4 2015-02-24 22:20:23.700
+!MESSAGE Conflicting handlers for org.eclipse.ui.navigate.backwardHistory: {ActionHandler(org.eclipse.ui.internal.NavigationHistoryAction@59a2bed1)} vs {ActionHandler(org.eclipse.ui.internal.dialogs.PreferencePageHistory$1@57630787)}

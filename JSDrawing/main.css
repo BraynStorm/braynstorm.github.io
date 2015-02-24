@@ -11,7 +11,13 @@ svg{
 	margin-top: 0px;
 }
 
-#angleBox{
+
+#menu{
 	position: fixed;
-	bottom: 10px;
+	bottom: 0px;
+	left:0px;
+
+	height: 50px;
+	width : 100%;
+	border : 1px solid black;
 }

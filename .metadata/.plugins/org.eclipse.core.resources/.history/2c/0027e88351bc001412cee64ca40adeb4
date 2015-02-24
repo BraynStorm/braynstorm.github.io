@@ -1,0 +1,23 @@
+@CHARSET "UTF-8";
+
+body{
+	background-color: #CCC;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+}
+
+svg{
+	margin-top: 0px;
+}
+
+#angleBox{
+	position: fixed;
+	bottom: 10px;
+}
+
+#menu{
+	position: fixed;
+	top: 0px;
+	left: 0px;
+}
