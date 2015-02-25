@@ -30,9 +30,12 @@ $(document).ready(function (){
 	
 	var angleArm	= $("#angleArm");
 	var angleArc	= $("#angleArc");
+	var ghostArm	= $("#ghostArm");
 	
 	var projectionSin = $("#projectionSin");
 	var projectionCos = $("#projectionCos");
+	var projectionTg	= $("#projectionTg");
+	var projectionCotg	= $("#projectionCotg");
 	
 	var projectionSinTxt = $("#projectionSinTxt");
 	var projectionCosTxt = $("#projectionCosTxt");
@@ -133,20 +136,47 @@ $(document).ready(function (){
 			stroke: cosColor
 		});
 		
+		projectionTg.attr({
+			x1: beginX,
+			y1: beginY,
+			x2: beginX + radius,
+			y2: beginY,
+			stroke: tgColor
+		});
 		
+		projectionCotg.attr({
+			x1: beginX,
+			y1: beginY,
+			x2: beginX,
+			y2: beginY - radius,
+			stroke: cotgColor
+		});
+		
+		ghostArm.attr({
+			x1: beginX,
+			y1: beginY
+		});
 	};
 	
 	showAdditions.click(function (){
 		if(showAdditions.is(":checked")){
 			projectionSin.attr("stroke-width","2");
 			projectionCos.attr("stroke-width","2");
+			projectionTg.attr("stroke-width","2");
+			projectionCotg.attr("stroke-width","2");
 			projectionSinTxt.attr("fill", sinColor);
 			projectionCosTxt.attr("fill", cosColor);
+			projectionTgTxt.attr("fill", tgColor);
+			projectionCotgTxt.attr("fill", cotgColor);
 		}else{
 			projectionSin.attr("stroke-width","0");
 			projectionCos.attr("stroke-width","0");
+			projectionTg.attr("stroke-width","0");
+			projectionCotg.attr("stroke-width","0");
 			projectionSinTxt.attr("fill", "none");
 			projectionCosTxt.attr("fill", "none");
+			projectionTgTxt.attr("fill", "none");
+			projectionCotgTxt.attr("fill", "none");
 		}
 	});
 	
@@ -171,6 +201,8 @@ $(document).ready(function (){
 		
 		var cos = Math.cos(radians);
 		var sin = Math.sin(radians);
+		var tg = Math.tan(radians);
+		var cotg = 1/tg;
 		
 		x = beginX + (cos * radius);
 		y = beginY - (sin * radius);
@@ -190,21 +222,50 @@ $(document).ready(function (){
 			y2: y
 		});
 		
+		projectionTg.attr({
+			x1: beginX,
+			x2: beginX + radius,
+			y1: beginY - (tg * radius),
+			y2: beginY - (tg * radius)
+		});
+		
+		projectionCotg.attr({
+			x1: beginX + (cotg * radius),
+			x2: beginX + (cotg * radius), 
+			y1: beginY,
+			y2: beginY - radius
+		});
+		
 		
 		projectionSinTxt.attr({
 			x: x+10,
-			y: (beginY - Math.abs(beginY - y) / 2) + (parseInt(projectionSinTxt.css("font-size")) / 2)
+			y: (beginY - (beginY - y) / 2) + (parseInt(projectionSinTxt.css("font-size")) / 2)
 		}).html(parseInt(cos*100)/100);
 		
 		projectionCosTxt.attr({
-			x: (beginX + Math.abs(beginX - x) / 2) - 10,
+			x: (beginX + (x - beginX) / 2) - 10,
 			y: y - 10
 		}).html(parseInt(sin*100)/100);
+		
+		if(angle % 360 > 90 && angle % 360 < 360){
+			console.log(angle % 360);
+			ghostArm.attr("stroke-width", "2");
+		}else{
+			console.log("asdasd");
+			ghostArm.attr("stroke-width", "0");
+		}
 		
 		angleArm.attr("x2", xb);
 		angleArm.attr("y2", yb);
 		
-		angleArc.attr("d", describeArc(beginX, beginY, radius/5, 90-angle, 90));
+		
+		
+		ghostArm.attr({
+			x2: beginX + ( Math.cos((180 + angle % 360) * (Math.PI / 180)) * radius * 4),
+			y2: beginY - ( Math.sin((180 + angle % 360) * (Math.PI / 180)) * radius * 4)
+		});
+		
+		angleArc.attr("d", describeArc(beginX, beginY, radius/5, 90-(angle%360), 90));
 		
 		
 		animator = setTimeout(animateAngle, 15);
