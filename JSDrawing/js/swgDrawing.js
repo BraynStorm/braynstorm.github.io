@@ -1,5 +1,6 @@
 var angleBox;
 var radiusBox;
+var speedBox;
 
 var menu;
 
@@ -29,8 +30,11 @@ var tgTxt;
 var cotgTxt;
 
 var angleArm;
-var angleArc;
 var ghostArm;
+var angleArc;
+var angleArc2;
+var angleArc3;
+var angleArc4;
 
 var projectionSin;
 var projectionCos;
@@ -51,6 +55,7 @@ var clickAngleAllowed = false;
 
 var angle;
 var arcAngle;
+
 
 function init(){
 	radius = parseInt(radiusBox.val());
@@ -172,6 +177,7 @@ $(document).ready(function (){
 	
 	angleBox	= $("#angleBox");
 	radiusBox	= $("#radiusBox");
+	speedBox	= $("#speedBox");
 	menu		= $("#menu");
 	beginX		= window.innerWidth/2;
 	beginY		= window.innerHeight/2;
@@ -206,8 +212,11 @@ $(document).ready(function (){
 	clickAngle	= $("#clickAngle");
 	
 	angleArm	= $("#angleArm");
-	angleArc	= $("#angleArc");
 	ghostArm	= $("#ghostArm");
+	angleArc	= $("#angleArc");
+	angleArc2	= $("#angleArc2");
+	angleArc3	= $("#angleArc3");
+	angleArc4	= $("#angleArc4");
 	
 	projectionSin = $("#projectionSin");
 	projectionCos = $("#projectionCos");
@@ -222,6 +231,7 @@ $(document).ready(function (){
 	radiusBox.keyup(function (){
 		init();
 	});
+	
 	
 	sinBox.click(function (){
 		if($(this).find("#chbox").is(":checked")){
@@ -273,6 +283,10 @@ $(document).ready(function (){
 	
 	
 	circle.click(clickAngleHandler);
+	speedBox.keyup(function (){
+		clearInterval(animator);
+		animator = setInterval(animateAngle, parseInt(speedBox.val()));
+	});
 	
 	function clickAngleHandler(m){
 		if(clickAngleAllowed){
@@ -302,9 +316,7 @@ $(document).ready(function (){
 	
 	angle = 0;
 	
-	var animator;
-	
-	animateAngle();
+	var animator = animator = setInterval(animateAngle, parseInt(speedBox.val()));;
 	
 	function animateAngle(){
 		var toAngle = parseInt(angleBox.val());
@@ -398,11 +410,23 @@ $(document).ready(function (){
 		});
 		
 		arcAngle = (90-angle % 360);
-		
+		var Ceil = Math.ceil((angle + 1) / 360);
 		angleArc.attr("d", describeArc(beginX, beginY, radius/5, Math.min(arcAngle,90), Math.max(90,arcAngle)));
-		
-		
-		animator = setTimeout(animateAngle, 15);
+		/* if(Ceil > 1){
+					angleArc1.attr("d", describeArc(beginX, beginY, radius/5, 1, 360));
+					if(Ceil > 2){
+						angleArc2.attr("d", describeArc(beginX, beginY, radius/5 + 10, 1, 360));
+						if(Ceil > 3){
+							angleArc3.attr("d", describeArc(beginX, beginY, radius/5 + 20, 1, 360));
+							if(Ceil > 4){
+								angleArc4.attr("d", describeArc(beginX, beginY, radius/5 + 30, 1, 360));
+							}else
+								angleArc4.attr("d", describeArc(beginX, beginY, radius/5 + 30, Math.min(arcAngle,90), Math.max(90,arcAngle)));
+						}else
+							angleArc3.attr("d", describeArc(beginX, beginY, radius/5 + 20, Math.min(arcAngle,90), Math.max(90,arcAngle)));
+					}else
+						angleArc2.attr("d", describeArc(beginX, beginY, radius/5 + 10, Math.min(arcAngle,90), Math.max(90,arcAngle)));
+				}else*/
 	}
 	
 	function getQuadrant(a){

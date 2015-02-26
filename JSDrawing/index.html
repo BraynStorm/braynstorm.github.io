@@ -37,7 +37,15 @@
 				 
 				<line id="angleArm" style="stroke:rgb(0,0,0);stroke-width:2;" />
 				<line id="ghostArm" style="stroke:rgba(0,0,0,.2);"/>
-				<path id="angleArc" stroke="grey" stroke-width="5" fill="none"/>
+				
+				<!--  TODO: numOfRotations -->
+				<text>
+				
+				<path id="angleArc1" stroke="#FF9E00" stroke-width="5" fill="none"/>
+			<!--<path id="angleArc2" stroke="#E88100" stroke-width="5" fill="none"/>
+				<path id="angleArc3" stroke="#FF7900" stroke-width="5" fill="none"/>
+				<path id="angleArc4" stroke="#E85C00" stroke-width="5" fill="none"/> -->
+				
 			</svg>
 			<div id="menu">
 				<table>
@@ -49,6 +57,10 @@
 						<tr>
 							<td>Ъгъл:</td>
 							<td><input type="text" value="30" id="angleBox" /></td>
+						</tr>
+						<tr>
+							<td>Скорост:</td>
+							<td><input type="text" value="15" id="speedBox" onchange="javascript: setSpeed();" /></td>
 						</tr>
 					</tbody>
 				</table>
