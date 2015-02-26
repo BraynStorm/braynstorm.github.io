@@ -286,12 +286,13 @@ $(document).ready(function (){
 			x/=R;
 			y/=R;
 			
-			var rad = Math.atan2(x,y);
-			angleBox.val(Math.floor(90-(rad * 180) / Math.PI));
+			var t = Math.atan2(x,y);
+			t = Math.floor(90-(t * 180) / Math.PI);
 			
-			console.log(x);
-			console.log(y);
-			console.log(rad);
+			if(t < 0)
+				t = 360 - Math.abs(t);
+			
+			angleBox.val(t);
 		}
 	}
 	
