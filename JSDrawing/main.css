@@ -14,7 +14,7 @@ svg{
 }
 
 #menu{
-	height: 150px;
+	height: 165px;
 	width : 200px;
 	
 	position: fixed;
@@ -45,4 +45,8 @@ svg{
 .configBoxes input{
 	transform: scale(1.4);
 	margin-right: 5px;
+}
+#clickAngle span{
+	width:165px;
+	font-size: 12px;
 }

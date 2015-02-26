@@ -28,8 +28,6 @@ var cosTxt;
 var tgTxt;
 var cotgTxt;
 
-
-
 var angleArm;
 var angleArc;
 var ghostArm;
@@ -43,6 +41,13 @@ var projectionSinTxt;
 var projectionCosTxt;
 var projectionTgTxt;
 var projectionCotgTxt;
+
+var sinBox;
+var cosBox;
+var tgBox;
+var cotgBox;
+var clickAngle;
+var clickAngleAllowed = false;
 
 var angle;
 var arcAngle;
@@ -198,6 +203,8 @@ $(document).ready(function (){
 	tgBox		= $("#tgBox");
 	cotgBox		= $("#cotgBox");
 	
+	clickAngle	= $("#clickAngle");
+	
 	angleArm	= $("#angleArm");
 	angleArc	= $("#angleArc");
 	ghostArm	= $("#ghostArm");
@@ -256,6 +263,37 @@ $(document).ready(function (){
 		}
 	});
 	
+	clickAngle.click(function (){
+		if($(this).find("#chbox").is(":checked")){
+			clickAngleAllowed = true;
+		}else{
+			clickAngleAllowed = false;
+		}
+	});
+	
+	
+	circle.click(clickAngleHandler);
+	
+	function clickAngleHandler(m){
+		if(clickAngleAllowed){
+			m.preventDefault();
+			
+			var x = (m.pageX - beginX);
+			var y = (beginY - m.pageY);
+			
+			var R = Math.sqrt(x*x + y*y);
+			
+			x/=R;
+			y/=R;
+			
+			var rad = Math.atan2(x,y);
+			angleBox.val(Math.floor(90-(rad * 180) / Math.PI));
+			
+			console.log(x);
+			console.log(y);
+			console.log(rad);
+		}
+	}
 	
 	menu.draggable();
 	
