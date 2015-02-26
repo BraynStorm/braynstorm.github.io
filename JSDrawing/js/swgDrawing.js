@@ -1,5 +1,8 @@
 var angleBox;
 var radiusBox;
+
+var menu;
+
 var beginX;
 var beginY;
 
@@ -161,8 +164,10 @@ function init(){
 };
 
 $(document).ready(function (){
+	
 	angleBox	= $("#angleBox");
 	radiusBox	= $("#radiusBox");
+	menu		= $("#menu");
 	beginX		= window.innerWidth/2;
 	beginY		= window.innerHeight/2;
 	
@@ -188,7 +193,10 @@ $(document).ready(function (){
 	tgTxt		= $("#tgTxt");
 	cotgTxt		= $("#cotgTxt");
 	
-	
+	sinBox		= $("#sinBox");
+	cosBox		= $("#cosBox");
+	tgBox		= $("#tgBox");
+	cotgBox		= $("#cotgBox");
 	
 	angleArm	= $("#angleArm");
 	angleArc	= $("#angleArc");
@@ -208,28 +216,48 @@ $(document).ready(function (){
 		init();
 	});
 	
-	showAdditions.click(function (){
-		if(showAdditions.is(":checked")){
+	sinBox.click(function (){
+		if($(this).find("#chbox").is(":checked")){
 			projectionSin.attr("stroke-width","2");
-			projectionCos.attr("stroke-width","2");
-			projectionTg.attr("stroke-width","2");
-			projectionCotg.attr("stroke-width","2");
 			projectionSinTxt.attr("fill", sinColor);
-			projectionCosTxt.attr("fill", cosColor);
-			projectionTgTxt.attr("fill", tgColor);
-			projectionCotgTxt.attr("fill", cotgColor);
 		}else{
 			projectionSin.attr("stroke-width","0");
-			projectionCos.attr("stroke-width","0");
-			projectionTg.attr("stroke-width","0");
-			projectionCotg.attr("stroke-width","0");
 			projectionSinTxt.attr("fill", "none");
+		}
+	});
+	
+	cosBox.click(function (){
+		if($(this).find("#chbox").is(":checked")){
+			projectionCos.attr("stroke-width","2");
+			projectionCosTxt.attr("fill", cosColor);
+		}else{
+			projectionCos.attr("stroke-width","0");
 			projectionCosTxt.attr("fill", "none");
+		}
+	});
+	
+	tgBox.click(function (){
+		if($(this).find("#chbox").is(":checked")){
+			projectionTg.attr("stroke-width","2");
+			projectionTgTxt.attr("fill", tgColor);
+		}else{
+			projectionTg.attr("stroke-width","0");
 			projectionTgTxt.attr("fill", "none");
+		}
+	});
+	
+	cotgBox.click(function (){
+		if($(this).find("#chbox").is(":checked")){
+			projectionCotg.attr("stroke-width","2");
+			projectionCotgTxt.attr("fill", cotgColor);
+		}else{
+			projectionCotg.attr("stroke-width","0");
 			projectionCotgTxt.attr("fill", "none");
 		}
 	});
 	
+	
+	menu.draggable();
 	
 	init();
 	
@@ -293,6 +321,7 @@ $(document).ready(function (){
 			y: (beginY - (beginY - y) / 2) + (parseInt(projectionSinTxt.css("font-size")) / 2)
 		}).html(parseInt(sin*100)/100);
 		
+		
 		projectionCosTxt.attr({
 			x: (beginX + (x - beginX) / 2) - 10,
 			y: y - 10
@@ -313,6 +342,11 @@ $(document).ready(function (){
 		}else{
 			ghostArm.attr("stroke-width", "0");
 		}
+		
+		sinBox.find(".values").html(parseInt(sin*10000)/10000);
+		cosBox.find(".values").html(parseInt(cos*10000)/10000);
+		tgBox.find(".values").html(parseInt(tg*10000)/10000);
+		cotgBox.find(".values").html(parseInt(cotg*10000)/10000);
 		
 		angleArm.attr("x2", xb);
 		angleArm.attr("y2", yb);
