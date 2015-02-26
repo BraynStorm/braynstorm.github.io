@@ -432,7 +432,7 @@ $(document).ready(function (){
 		    "A", radius, radius, 0, arcSweep, 0, end.x, end.y
 		].join(" ");
 		
-		return d;       
+		return d;
 	}
 	
 	function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
