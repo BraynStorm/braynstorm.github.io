@@ -29,22 +29,25 @@
 				<line id="projectionTg" stroke-width="0"/>
 				<line id="projectionCotg" stroke-width="0"/>
 				
-				<text id="projectionSinTxt" fill="none"></text>
-				<text id="projectionCosTxt" fill="none"></text>
-				<text id="projectionTgTxt" fill="none"></text>
-				<text id="projectionCotgTxt" fill="none"></text>
+				<text class="projectionText" id="projectionSinTxt" fill="none"></text>
+				<text class="projectionText" id="projectionCosTxt" fill="none"></text>
+				<text class="projectionText" id="projectionTgTxt" fill="none"></text>
+				<text class="projectionText" id="projectionCotgTxt" fill="none"></text>
 				<!--  THE ANGLE -->
+				 
 				 
 				<line id="angleArm" style="stroke:rgb(0,0,0);stroke-width:2;" />
 				<line id="ghostArm" style="stroke:rgba(0,0,0,.2);"/>
 				
-				<!--  TODO: numOfRotations -->
-				<text>
+				<text id="angleArcNumber" fill="black"></text>
 				
-				<path id="angleArc1" stroke="#FF9E00" stroke-width="5" fill="none"/>
-			<!--<path id="angleArc2" stroke="#E88100" stroke-width="5" fill="none"/>
-				<path id="angleArc3" stroke="#FF7900" stroke-width="5" fill="none"/>
-				<path id="angleArc4" stroke="#E85C00" stroke-width="5" fill="none"/> -->
+				<path id="angleArc" stroke="#FF9E00" stroke-width="5" fill="none"/>
+				
+				
+				<rect x="0" y="0" fill="none" width="100" height="30" class="bgBox" id="sinBgBox"/>
+				<rect x="0" y="0" fill="none" class="bgBox" id="cosBgBox"/>
+				<rect x="0" y="0" fill="none" class="bgBox" id="tgBgBox"/>
+				<rect x="0" y="0" fill="none" class="bgBox" id="cotgBgBox"/>
 				
 			</svg>
 			<div id="menu">

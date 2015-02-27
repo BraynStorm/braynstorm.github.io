@@ -17,7 +17,6 @@ var radius;
 var svg;
 
 var circle;
-var showAdditions;
 
 var sinAxis;
 var cosAxis;
@@ -32,9 +31,6 @@ var cotgTxt;
 var angleArm;
 var ghostArm;
 var angleArc;
-var angleArc2;
-var angleArc3;
-var angleArc4;
 
 var projectionSin;
 var projectionCos;
@@ -46,6 +42,9 @@ var projectionCosTxt;
 var projectionTgTxt;
 var projectionCotgTxt;
 
+var bgBox;
+var angleArcNumber;
+
 var sinBox;
 var cosBox;
 var tgBox;
@@ -55,7 +54,6 @@ var clickAngleAllowed = false;
 
 var angle;
 var arcAngle;
-
 
 function init(){
 	radius = parseInt(radiusBox.val());
@@ -166,6 +164,11 @@ function init(){
 		stroke: cotgColor
 	});
 	
+	angleArcNumber.attr({
+		x: beginX,
+		y: beginY
+	});
+	
 	
 	ghostArm.attr({
 		x1: beginX,
@@ -192,7 +195,6 @@ $(document).ready(function (){
 	svg			= $('svg');
 	
 	circle		= $('#mainCircle');
-	showAdditions = $("#showAdditions");
 	
 	sinAxis 	= $("#sinAxis");
 	cosAxis		= $("#cosAxis");
@@ -214,9 +216,6 @@ $(document).ready(function (){
 	angleArm	= $("#angleArm");
 	ghostArm	= $("#ghostArm");
 	angleArc	= $("#angleArc");
-	angleArc2	= $("#angleArc2");
-	angleArc3	= $("#angleArc3");
-	angleArc4	= $("#angleArc4");
 	
 	projectionSin = $("#projectionSin");
 	projectionCos = $("#projectionCos");
@@ -228,10 +227,13 @@ $(document).ready(function (){
 	projectionTgTxt = $("#projectionTgTxt");
 	projectionCotgTxt = $("#projectionCotgTxt");
 	
+	bgBox = $(".bgBox");
+	
+	angleArcNumber		= $("#angleArcNumber");
+	
 	radiusBox.keyup(function (){
 		init();
 	});
-	
 	
 	sinBox.click(function (){
 		if($(this).find("#chbox").is(":checked")){
@@ -399,9 +401,10 @@ $(document).ready(function (){
 		tgBox.find(".values").html(parseInt(tg*10000)/10000);
 		cotgBox.find(".values").html(parseInt(cotg*10000)/10000);
 		
-		angleArm.attr("x2", xb);
-		angleArm.attr("y2", yb);
-		
+		angleArm.attr({
+			x2: xb,
+			y2: yb
+		});
 		
 		
 		ghostArm.attr({
@@ -409,24 +412,22 @@ $(document).ready(function (){
 			y2: beginY - ( Math.sin((180 + angle % 360) * (Math.PI / 180)) * radius * 4)
 		});
 		
+		//SIN
+		svg.find(".bgBox").attr({
+			x: projectionSinTxt.attr("x") - 5,
+			y: projectionSinTxt.attr("y") - 20,
+			width: projectionSinTxt.width() + 10,
+			fill: "rgba(0,0,0,0.2)"
+		});
+		
 		arcAngle = (90-angle % 360);
-		var Ceil = Math.ceil((angle + 1) / 360);
+		
 		angleArc.attr("d", describeArc(beginX, beginY, radius/5, Math.min(arcAngle,90), Math.max(90,arcAngle)));
-		/* if(Ceil > 1){
-					angleArc1.attr("d", describeArc(beginX, beginY, radius/5, 1, 360));
-					if(Ceil > 2){
-						angleArc2.attr("d", describeArc(beginX, beginY, radius/5 + 10, 1, 360));
-						if(Ceil > 3){
-							angleArc3.attr("d", describeArc(beginX, beginY, radius/5 + 20, 1, 360));
-							if(Ceil > 4){
-								angleArc4.attr("d", describeArc(beginX, beginY, radius/5 + 30, 1, 360));
-							}else
-								angleArc4.attr("d", describeArc(beginX, beginY, radius/5 + 30, Math.min(arcAngle,90), Math.max(90,arcAngle)));
-						}else
-							angleArc3.attr("d", describeArc(beginX, beginY, radius/5 + 20, Math.min(arcAngle,90), Math.max(90,arcAngle)));
-					}else
-						angleArc2.attr("d", describeArc(beginX, beginY, radius/5 + 10, Math.min(arcAngle,90), Math.max(90,arcAngle)));
-				}else*/
+		var rotations = Math.abs(Math.ceil((angle + 1) / 360));
+		if(rotations > 0)
+			angleArcNumber.html(rotations);
+		else
+			angleArcNumber.html("");
 	}
 	
 	function getQuadrant(a){
