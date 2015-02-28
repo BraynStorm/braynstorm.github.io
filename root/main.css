@@ -1,0 +1,30 @@
+/* Button code */
+.button{
+	height: 222px;
+	font: 70px Tahoma;
+	overflow:hidden;
+}
+
+.buttonLeftSide{
+	background: url("img/buttonLeft.png");
+	width: 127px;
+	height: 222px;
+	float: left;
+}
+
+.buttonRightSide{
+	background: url("img/buttonRight.png");
+	width: 127px;
+	height: 222px;
+	float: left;
+}
+
+.buttonContent{
+	float:left;
+	text-align: center;
+	line-height: 190px;
+	margin: 16px -15px 0px -20px;
+	padding: 0 30px 0 30px;
+	background: url("img/buttonStrip.png");
+	overflow: hidden;
+}
