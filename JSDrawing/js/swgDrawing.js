@@ -165,8 +165,8 @@ function init(){
 	});
 	
 	angleArcNumber.attr({
-		x: beginX,
-		y: beginY
+		x: beginX - 6,
+		y: beginY + 5
 	});
 	
 	
@@ -285,6 +285,7 @@ $(document).ready(function (){
 	
 	
 	circle.click(clickAngleHandler);
+	
 	speedBox.keyup(function (){
 		clearInterval(animator);
 		animator = setInterval(animateAngle, parseInt(speedBox.val()));
