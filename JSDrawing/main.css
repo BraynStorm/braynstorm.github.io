@@ -50,3 +50,7 @@ svg{
 	width:165px;
 	font-size: 12px;
 }
+
+.bgBox{
+  display:none;
+}
