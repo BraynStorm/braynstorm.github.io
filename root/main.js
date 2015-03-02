@@ -11,71 +11,76 @@ OpeningButton.init = function (txtWidth, rotateSpeed, openSpeed, buttonClass, sp
 		return 0;
 	}
 	
-	THIS = this;
+	
 	
 	var button  = $(buttonClass);
 	var spinner;
 	var leftSide;
 	var rightSide;
 	var text;
+	var THIS;
 	
 	button.mouseenter(function (){
 		//stop();
-		console.log("mouseover");
-		spinner = $(this).find('div' + spinnerClass);
-		leftSide = $(this).find('div' + buttonLeftClass);
-		rightSide = $(this).find('div' + buttonRightClass);
-		text = $(this).find('div' + buttonTextClass);
+		spinner = $(this).find("div" + spinnerClass);
+		leftSide = $(this).find("div" + buttonLeftClass);
+		rightSide = $(this).find("div" + buttonRightClass);
+		text = $(this).find("div" + buttonTextClass);
+		
+		THIS = $(this);
+		
+		leftSide.css("marginLeft", THIS.width()/2 - leftSide.width());
 		
 		text.stop();
-		spinner.stop().transition({rotate:'90deg', duration: rotateSpeed, complete: function (){
-			console.log("spinnerSpun");
+		spinner.stop().transition({rotate:"90deg", duration: rotateSpeed, complete: function (){
 			spinner.css("display", "none");
 			leftSide.css("display", "block");
 			rightSide.css("display", "block");
 			text.css("display", "block").stop().animate({
 				width: txtWidth
-			}, openSpeed);
-			console.log("textAppeared");
+			}, {duration: openSpeed, queue: false});
+			leftSide.stop().animate({
+				marginLeft: (THIS.width() - txtWidth - leftSide.width())/2
+			}, {duration: openSpeed, queue: false});
 			
 		}});
-		//spinner.css("display", 'none');
+		//spinner.css("display", "none");
 	}).mouseleave(function (){
 		//stop();
-		spinner = $(this).find('div' + spinnerClass);
-		leftSide = $(this).find('div' + buttonLeftClass);
-		rightSide = $(this).find('div' + buttonRightClass);
-		text = $(this).find('div' + buttonTextClass);
+		spinner = $(this).find("div" + spinnerClass);
+		leftSide = $(this).find("div" + buttonLeftClass);
+		rightSide = $(this).find("div" + buttonRightClass);
+		text = $(this).find("div" + buttonTextClass);
+		
 		spinner.stop();
 		text.stop().animate({
 			width: 0
 		},{
 			duration: openSpeed,
+			queue: false,
 			complete: function (){
 				
 				leftSide.css("display", "none");
 				rightSide.css("display", "none");
 				text.css("display", "none");
 				
-				spinner.css("display", 'block').stop().transition({
-					rotate:'0deg',
+				spinner.css("display", "block").stop().transition({
+					rotate:"0deg",
 					duration: rotateSpeed,
 					complete: function (){
-						spinner.css("display", 'block');
+						spinner.css("display", "block");
 						
 						leftSide.css("display", "none");
 						rightSide.css("display", "none");
 						text.css("display", "none");
-						
-						console.log("oout");
 					}
 				});
 			}
 		});
 		
-		
-		
+		leftSide.stop().animate({
+			marginLeft: ( THIS.width() / 2 - leftSide.width() )
+		}, {duration: openSpeed, queue: false});
 		
 	});
-	
 }

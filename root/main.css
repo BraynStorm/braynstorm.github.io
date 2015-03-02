@@ -2,7 +2,7 @@
 	background: cyan;
 	width: 1200px;
 	height: 222px;
-	margin: 0 auto;
+	margin: 010 auto;
 	padding: 0;
 }
 
@@ -10,14 +10,14 @@
 	background: url(img/button.png);
 	width: 222px;
 	height: 222px;
-	
+	margin: 0 auto;
 }
 .button-text{
 	background: url(img/buttonStrip.png);
-	background-position: 0 1px;
 	width: 0px;
 	height: 222px;
 	float: left;
+	font: 50px Verdana, sans-serif;
 	line-height: 222px;
 	text-align: center;
 	overflow: hidden;
@@ -28,7 +28,6 @@
 	width: 111px;
 	height: 222px;
 	background: url(img/buttonLeft.png);
-	
 	display: none;
 	
 }
