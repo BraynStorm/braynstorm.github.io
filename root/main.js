@@ -1,10 +1,10 @@
 $(document).ready(function (){
-	OpeningButton.init(500, 500, ".button-holder",".button-spinner",".button-left",".button-right", ".button-text");
+	OpeningButton.init(700, 100, 200, ".button-holder",".button-spinner",".button-left",".button-right", ".button-text");
 });
 
 var OpeningButton = {};
 
-OpeningButton.init = function (rotateSpeed, openSpeed, buttonClass, spinnerClass, buttonLeftClass, buttonRightClass, buttonTextClass){
+OpeningButton.init = function (txtWidth, rotateSpeed, openSpeed, buttonClass, spinnerClass, buttonLeftClass, buttonRightClass, buttonTextClass){
 	
 	if($ == undefined || jQuery == undefined){
 		console.log("JQUERY isn't installed!" + "\n Exiting..");
@@ -19,32 +19,35 @@ OpeningButton.init = function (rotateSpeed, openSpeed, buttonClass, spinnerClass
 	var rightSide;
 	var text;
 	
-	button.mouseover(function (){
-		stop();
+	button.mouseenter(function (){
+		//stop();
+		console.log("mouseover");
 		spinner = $(this).find('div' + spinnerClass);
 		leftSide = $(this).find('div' + buttonLeftClass);
 		rightSide = $(this).find('div' + buttonRightClass);
 		text = $(this).find('div' + buttonTextClass);
 		
-		spinner.transition({rotate:'90deg', duration: rotateSpeed, complete: function (){
+		text.stop();
+		spinner.stop().transition({rotate:'90deg', duration: rotateSpeed, complete: function (){
+			console.log("spinnerSpun");
 			spinner.css("display", "none");
 			leftSide.css("display", "block");
 			rightSide.css("display", "block");
-			text.css("display", "block").animate({
-				width: 700
+			text.css("display", "block").stop().animate({
+				width: txtWidth
 			}, openSpeed);
+			console.log("textAppeared");
 			
-			console.log("over");
 		}});
 		//spinner.css("display", 'none');
-	}).mouseout(function (){
-		stop();
+	}).mouseleave(function (){
+		//stop();
 		spinner = $(this).find('div' + spinnerClass);
 		leftSide = $(this).find('div' + buttonLeftClass);
 		rightSide = $(this).find('div' + buttonRightClass);
 		text = $(this).find('div' + buttonTextClass);
-		
-		text.animate({
+		spinner.stop();
+		text.stop().animate({
 			width: 0
 		},{
 			duration: openSpeed,
@@ -54,11 +57,16 @@ OpeningButton.init = function (rotateSpeed, openSpeed, buttonClass, spinnerClass
 				rightSide.css("display", "none");
 				text.css("display", "none");
 				
-				spinner.css("display", 'block').transition({
+				spinner.css("display", 'block').stop().transition({
 					rotate:'0deg',
 					duration: rotateSpeed,
 					complete: function (){
 						spinner.css("display", 'block');
+						
+						leftSide.css("display", "none");
+						rightSide.css("display", "none");
+						text.css("display", "none");
+						
 						console.log("oout");
 					}
 				});

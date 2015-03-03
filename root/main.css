@@ -2,7 +2,7 @@
 	background: cyan;
 	width: 1200px;
 	height: 222px;
-	margin: 0px auto;
+	margin: 0 auto;
 	padding: 0;
 }
 
@@ -10,9 +10,11 @@
 	background: url(img/button.png);
 	width: 222px;
 	height: 222px;
+	
 }
 .button-text{
 	background: url(img/buttonStrip.png);
+	background-position: 0 1px;
 	width: 0px;
 	height: 222px;
 	float: left;
@@ -26,6 +28,7 @@
 	width: 111px;
 	height: 222px;
 	background: url(img/buttonLeft.png);
+	
 	display: none;
 	
 }
