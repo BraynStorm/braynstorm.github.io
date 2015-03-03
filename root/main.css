@@ -1,57 +1,40 @@
-/* Button code */
-.button{
-	height: 222px;
-	width: 1000px;
-	font: 70px Tahoma;
-	overflow:hidden;
-	background: green;
+.button-holder{
+	background: cyan;
+	width: 1200px;
+	height: 300px;
+	margin: 0px auto;
+	padding: 0;
 }
 
-.buttonLeftSide{
-	background: url("img/buttonLeft.png");
-	width: 127px;
-	height: 222px;
+.button-spinner{
+	background: url(img/buttonAfterRotation.png);
+	width: 222px;
+	height: 220px;
+	-webkit-transform: rotate(0deg);
+}
+.button-text{
+	background: #AAA;
+	width: 10px;
+	height: 220px;
 	float: left;
-	overflow:hidden;
-}
-
-.buttonRightSide{
-	background: url("img/buttonRight.png");
-	width: 127px;
-	height: 222px;
-	float: left;
-	overflow:hidden;
-}
-
-.buttonContent{
-	float:left;
+	line-height: 222px;
 	text-align: center;
-	line-height: 190px;
-	margin: 16px -15px 0px -20px;
-	padding: 0 30px 0 30px;
-	background: url("img/buttonStrip.png");
 	overflow: hidden;
+	margin-right: -20px;
 }
-
-.buttonClosed{
-	background: url("img/buttonAfterRotation.png");
-	transform: rotate(0deg);
-	-webkit-animation: bbb 1s;
-	width: 220px;
+.button-left{
+	float: left;
+	width: 127px;
 	height: 222px;
-	margin: 0 auto;
+	background: url(img/buttonLeft.png);
+	display: none;
+	
 }
-
-.buttonClosed:hover{
-	-webkit-animation: aaa 1s;
-}
-
-@-webkit-keyframes aaa{
-	from {transform: rotate(0deg);}
-	to {transform: rotate(90deg);}
-}
-
-@-webkit-keyframes bbb{
-	from {transform: rotate(90deg);}
-	to {transform: rotate(0deg);}
+.button-right{
+	float: left;
+	width: 127px;
+	height: 222px;
+	background: url(img/buttonRight.png);
+	display: none;
+	
 }
