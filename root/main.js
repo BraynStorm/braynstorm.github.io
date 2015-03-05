@@ -27,9 +27,13 @@ OpeningButton.init = function (txtWidth, rotateSpeed, openSpeed, buttonClass, sp
 		rightSide = $(this).find("div" + buttonRightClass);
 		text = $(this).find("div" + buttonTextClass);
 		
+		$.each($(this).children(), function (i,v){
+			$(v).stop();
+		});
+		
 		THIS = $(this);
 		
-		leftSide.css("marginLeft", THIS.width()/2 - leftSide.width());
+		leftSide.css("marginLeft", THIS.width()/2 - leftSide.width()).stop();
 		
 		text.stop();
 		spinner.stop().transition({rotate:"90deg", duration: rotateSpeed, complete: function (){
@@ -40,7 +44,7 @@ OpeningButton.init = function (txtWidth, rotateSpeed, openSpeed, buttonClass, sp
 				width: txtWidth
 			}, {duration: openSpeed, queue: false});
 			leftSide.stop().animate({
-				marginLeft: (THIS.width() - txtWidth - leftSide.width())/2
+				marginLeft: (THIS.width() - txtWidth) / 2 - leftSide.width()
 			}, {duration: openSpeed, queue: false});
 			
 		}});
@@ -52,7 +56,12 @@ OpeningButton.init = function (txtWidth, rotateSpeed, openSpeed, buttonClass, sp
 		rightSide = $(this).find("div" + buttonRightClass);
 		text = $(this).find("div" + buttonTextClass);
 		
+		$.each($(this).children(), function (i,v){
+			$(v).stop();
+		});
+		
 		spinner.stop();
+		leftSide.stop();
 		text.stop().animate({
 			width: 0
 		},{

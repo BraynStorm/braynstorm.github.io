@@ -4,6 +4,7 @@
 	height: 222px;
 	margin: 010 auto;
 	padding: 0;
+	overflow: hidden;
 }
 
 .button-spinner{
