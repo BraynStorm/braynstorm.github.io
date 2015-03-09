@@ -420,7 +420,7 @@ $(document).ready(function () {
 		angleArc.attr("d", describeArc(beginX, beginY, radius / 5, Math.min(arcAngle, 90), Math.max(90, arcAngle)));
 		var rotations = Math.abs(Math.ceil((angle + 1) / 360));
 		if (rotations > 1)
-			angleArcNumber.html(rotations);
+			angleArcNumber.html(rotations - 1);
 		else
 			angleArcNumber.html("");
 	}
