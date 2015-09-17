@@ -1,0 +1,80 @@
+body{
+	font: 24px Verdana;
+}
+
+#game{
+	background: black;
+	width: 840px;
+	margin: 0 auto;
+	height: 700px;
+}
+
+.card{
+	width: 100px;
+	height: 155px;
+	background: pink;
+	float: left;
+	margin: 0 10px 0 10px;
+	padding: 0;
+}
+
+.row{
+	height: 155px;
+	margin: 0px auto 20px auto;
+}
+
+#row1{ width: 120px; }
+#row3{ width: 360px; }
+#row5{ width: 600px; }
+#row7{ width: 840px; }
+
+
+#controls{
+	width: 500px;
+	height: 90px;
+	margin: 20px auto;
+}
+
+.button{
+	float:left;
+	width: 192px;
+	height: 70px;
+	
+	margin-top: 10px;	
+	font: 32px Verdana;
+	text-align: center;
+	line-height: 65px;
+	border-radius: 30px;
+	
+	background: #9C9C9C;
+	border: 4px solid Black;
+}
+.button:first-child{
+	margin-right: 100px;
+}
+
+.disabled{
+	
+}
+
+.selected{
+	background: green;
+}
+
+#log_container{
+	width: 300px;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background: #EEE;
+}
+#log_container>div:first-child{
+	width: 294px;
+	height: 30px;
+	text-align: center;
+	
+	border: double black;
+}
+
+
