@@ -1,3 +1,4 @@
+var player;
 $(document).ready(function (){
 	var LOG = $("#log");
 	var GAME = $('#game');
@@ -30,7 +31,7 @@ $(document).ready(function (){
 		return true;
 	}
 	
-	var player = {
+	player = {
 		removedThisTurn_count : 0,
 		removedThisTurn_from : 0,
 		cpuMakingMove : false,
@@ -67,10 +68,16 @@ $(document).ready(function (){
 			if(player.removedThisTurn_count === 0 || player.removedThisTurn_from === 0)
 				return;
 			
+			var chldr = rows[player.removedThisTurn_from].children();
+			
+			chldr.each(function (index){
+				$(this).removeClass('selected');
+			});
+			
 			removeFromRow(true, player.removedThisTurn_from, player.removedThisTurn_count);
 			
-			removedThisTurn_from = 0;
-			removedThisTurn_count = 0;
+			player.removedThisTurn_from = 0;
+			player.removedThisTurn_count = 0;
 			
 			
 			cpuMove();
@@ -91,7 +98,7 @@ $(document).ready(function (){
 			var num = 0;
 			
 			for(var i in rowSize){
-				num += rowSize[i] & pow(2, column-1);
+				num += rowSize[i] & Math.pow(2, column-1);
 			}
 			
 			return num % 2 == 0;
@@ -99,7 +106,7 @@ $(document).ready(function (){
 		
 		function findRowWithPosition(position){
 			for(var i in rowSize){
-				var k = ((rowSize[i] & pow(2, position-1)) !== 0);
+				var k = ((rowSize[i] & Math.pow(2, position-1)) !== 0);
 				if( k )
 					return i;
 			}
@@ -149,7 +156,7 @@ $(document).ready(function (){
 	
 	
 	function log(player, text){
-		LOG.append(player? "The Player:" : "The Computer:" + text);
+		LOG.append((player ? "The Player:" : "The Computer:") + text + "<br/>");
 	}
 	
 	

@@ -1,0 +1,68 @@
+@font-face{	
+	src: url(FRIZQT__.ttf);
+	font-family: FrizQuadrata;
+}
+@font-face{
+	src: url(MORPHEUS.ttf);
+	font-family: Morpheus;
+}
+
+body{
+	font: 25px Morpheus;
+	color: #d4d4d4;
+	background-color: #292929;
+}
+
+.class-color{ font-size: 20px; }
+.class-color-dk		{ color: #C41F3B; }
+.class-color-druid	{ color: #FF7D0A; }
+.class-color-hunter	{ color: #ABD473; }
+.class-color-mage	{ color: #69CCF0; }
+.class-color-monk	{ color: #00FF96; }
+.class-color-paladin{ color: #F58CBA; }
+.class-color-priest	{ color: #FFF; 	  }
+.class-color-rogue	{ color: #FFF569; }
+.class-color-shaman	{ color: #0070DE; }
+.class-color-warlock{ color: #9482C9; }
+.class-color-warrior{ color: #C79C6E; }
+
+div.class-color{
+	width: 140px;
+	height: 30px;
+	
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	
+	cursor: pointer;
+	text-align: center;
+	vertical-align: middle;
+	
+	margin: 0px auto;
+	border-radius: 15px;
+}
+
+#list-container{
+/*	border-radius: 15px;
+	background: #202020;
+	width: 160px;
+	padding-left:10px;
+	padding-right:10px;*/
+	
+	width: 500px;
+	height: 100px;
+	border: 2px solid black;
+}
+/*#list-container>div:first-child{
+	text-align: center;
+	border-radius: 15px;
+	border: 2px solid black;
+	height: 40px;
+	margin-left:-10px;
+	margin-right:-10px;
+}*/
+
+.dropdown-container{
+	overflow: hidden;
+	height: 0px;
+}

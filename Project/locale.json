@@ -1,0 +1,18 @@
+{
+	"bg":{
+		"header-index": "Начало",
+		"header-crew": "Екип",
+		"header-prices": "Цени",
+		"header-done-purchases": "Готови поръчки",
+		"header-rules": "Правла",
+		"header-faq": "Често задавани въпроси"
+	},
+	"uk":{
+		"header-index": "Home",
+		"header-crew": "Crew",
+		"header-prices": "Prices",
+		"header-done-purchases": "Done Purchases",
+		"header-rules": "Rules",
+		"header-faq": "FAQ"
+	}
+}
