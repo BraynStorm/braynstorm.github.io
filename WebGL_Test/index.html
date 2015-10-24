@@ -51,7 +51,6 @@ mat4 transpose(mat4 inMatrix) {
 			
 void main(){
 	gl_Position = projection_matrix * (camera_rotation_matrix * camera_translation_matrix) * transform_matrix * vec4(position, 1);
-	gl_Position.z = -gl_Position.z; // A hack. TODO remove the hack.
 	tc = normal;
 }
 		</script>

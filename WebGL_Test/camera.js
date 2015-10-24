@@ -31,6 +31,17 @@ var Camera = (function() {
 				position.x -= 0.01;
 				markDirty();
 			}
+			
+			
+			if(keyboard.isKeyDown(Keyboard.KEY_SPACE)){
+				position.y += 0.01;
+				markDirty();
+			}
+			
+			if(keyboard.isKeyDown(Keyboard.KEY_X)){
+				position.y -= 0.01;
+				markDirty();
+			}
 		}
 		
 		this.bind = function() {
