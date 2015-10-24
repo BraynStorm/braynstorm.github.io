@@ -2,9 +2,18 @@
 var gl;
 var canvas;
 var global_interval;
-var eventManager;
+var timer;
+
 var info = {"lol" : "lo2l"};
+var filenamePattern = /(?:.*[\/\\])?(.*)\.(.*)/ig;
+
+//Globals - AngularJS
 var app;
+
+// Globals - Managers
+var eventManager;
+var textureManager;
+
 
 // Globals - Shaders
 var worldShader;
@@ -20,9 +29,13 @@ var camera;
 var keyboard;
 var mouse;
 
-
 // The whole scene.
 var scene = [];
+
+
+//TestStuff
+var frames = 1;
+var passedTime = 0;
 
 Number.prototype.toRadians = function() {
 	return this * Math.PI / 180;
@@ -74,7 +87,7 @@ var Common = {
 };
 
 var I = 0;
-
+info['fps'] = "asdasd";
 function start(){
 	canvas = document.getElementById("canvas");
 	gl = canvas.getContext("webgl");
@@ -84,10 +97,13 @@ function start(){
 	gl.enable(gl.CULL_FACE);
 	gl.frontFace(gl.CW);
 	
-	
 	gl.enableVertexAttribArray(0);
 	gl.enableVertexAttribArray(1);
 	gl.enableVertexAttribArray(2);
+	
+	gl.clearColor(0.2, 0.2, 0.2, 1);
+	
+	setup();
 	
 	Common.projection_matrix = new Mat4();
 	Common.projection_matrix.projection(Common.zNear, Common.zFar, Common.fov, canvas.width / canvas.height);
@@ -99,10 +115,6 @@ function start(){
 	thingsTransfrom.setTranslationY(2).setTranslationZ(10).setRotationY(-90);
 	
 	initMeshes();
-	setupEvents();
-	mouse = new Mouse();
-	camera = new Camera();
-	keyboard = new Keyboard();
 	
 	worldShader = new Shader("world_vs", "world_fs");
 	worldShader.addUniform("transform_matrix");
@@ -110,12 +122,21 @@ function start(){
 	worldShader.addUniform("camera_translation_matrix");
 	worldShader.addUniform("camera_rotation_matrix");
 	
-	global_interval = window.setInterval(renderScene, 1000.0 / 60.0);
+	timer.loop();
+	global_interval = window.setInterval(renderScene, 1000.0 / 900.0);
 	
 }
 
-function setupEvents(){
+function setup(){
+	timer = new Timer();
+	
 	eventManager = new EventManager();
+	textureManager = new TextureManager();
+	
+	mouse = new Mouse();
+	keyboard = new Keyboard();
+	camera = new Camera();
+	
 	var cnv = $("#canvas");
 	
 	cnv.on('mousedown', function (e){
@@ -163,12 +184,11 @@ function setupEvents(){
 			keyCode : e.keyCode,
 			which : e.which
 		});
-	})
+	});
 }
 
 function renderScene(){
 	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-	gl.clearColor(0.2, 0.2, 0.2, 1);
 	
 	var val = I/60;
 	
@@ -183,6 +203,16 @@ function renderScene(){
 	});
 	
 	I++;
+	frames++;
+	passedTime += timer.getDeltaMilliseconds();
+	if(passedTime >= 1000){
+		info.fps = frames / (passedTime / 1000);
+		passedTime = 0;
+		frames = 0;
+		console.log(info.fps);
+	}
+	
+	timer.loop();
 }
 
 function initMeshes(){
