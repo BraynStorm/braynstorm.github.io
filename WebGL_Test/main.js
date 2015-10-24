@@ -96,7 +96,7 @@ function start(){
 	cannonTransform.setTranslationZ(10).setRotationY(90);
 	
 	thingsTransfrom = new Transform();
-	thingsTransfrom.setTranslationY(2).setTranslationZ(10).setRotationY(-50);
+	thingsTransfrom.setTranslationY(2).setTranslationZ(10).setRotationY(-90);
 	
 	initMeshes();
 	setupEvents();
