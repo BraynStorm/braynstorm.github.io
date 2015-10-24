@@ -13,7 +13,7 @@ var Mesh = (function (){
 			var bufferData = [];
 			var faces = [];
 			
-			var hasNormals = (data.normals === undefined || data.normals.length < 1);
+			var hasNormals = !(data.normals == undefined || data.normals.length < 1);
 			
 			for(var i = 0; i < data.positions.length; i++){
 				bufferData.push(data.positions[i][0]);

@@ -23,12 +23,13 @@ var Camera = (function() {
 		this.loop = function() {
 			if(keyboard.isKeyDown(Keyboard.KEY_A)){
 				position.x += 0.01;
-				markDirty()
+				console.log(position);
+				markDirty();
 			}
 			
 			if(keyboard.isKeyDown(Keyboard.KEY_D)){
 				position.x -= 0.01;
-				markDirty()
+				markDirty();
 			}
 		}
 		
@@ -65,10 +66,10 @@ var Camera = (function() {
 			xRot += angle;
 			
 			
-			var horizontalAxis = (Camera.Y_AXIS.getCrossed(forward)).normalize();
-			
-			(forward.rotate(angle, horizontalAxis)).normalize();
-			up = (forward.getCrossed(horizontalAxis)).normalize();
+			var horizontalAxis = Camera.Y_AXIS.getCrossed(forward).normalize();
+			console.log(horizontalAxis)
+			forward.rotate(angle, horizontalAxis).normalize();
+			up = forward.getCrossed(horizontalAxis).normalize();
 			markDirty();
 		};
 		
@@ -77,7 +78,6 @@ var Camera = (function() {
 				return;
 			
 			yRot += angle;
-			console.log(yRot);
 			
 			var horizontalAxis = Camera.Y_AXIS.getCrossed(forward).normalize();
 			
@@ -101,7 +101,6 @@ var Camera = (function() {
 		this.mouseMove = function (e){
 			if(mouse.getMouseState() === 0){
 				if(lastMousePos !== undefined){
-					console.log("AGNEL :" + (mouse.getX() - lastMousePos.x))
 					rotateX((lastMousePos.y - mouse.getY()), false);
 					rotateY((lastMousePos.x - mouse.getX()));
 				}

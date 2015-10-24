@@ -14,6 +14,7 @@ var Shader = (function(){
 		var program = gl.createProgram();
 		gl.bindAttribLocation(program, 0, "position");
 		gl.bindAttribLocation(program, 1, "texCoord");
+		gl.bindAttribLocation(program, 1, "normal");
 		
 		gl.attachShader(program, vs);
 		gl.attachShader(program, fs);

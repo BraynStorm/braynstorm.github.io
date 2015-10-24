@@ -46,13 +46,11 @@ var Common = {
 			return buffer;
 		},
 		
-		renderMesh : function (vbo, ibo, drawCount, hasNormals){
+		renderMesh : function (vbo, ibo, drawCount){
 			gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
-			gl.vertexAttribPointer(0, 3, gl.FLOAT, false, hasNormals ? 32 : 20, 0);
-			gl.vertexAttribPointer(1, 2, gl.FLOAT, false, hasNormals ? 32 : 20, 12);
-			
-			if(hasNormals)
-				gl.vertexAttribPointer(2, 3, gl.FLOAT, false, 32, 20);
+			gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 32, 0);
+			gl.vertexAttribPointer(1, 2, gl.FLOAT, false, 32, 12);
+			gl.vertexAttribPointer(2, 3, gl.FLOAT, false, 32, 20);
 			
 			gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ibo);
 			gl.drawElements(gl.TRIANGLES, drawCount, gl.UNSIGNED_SHORT, 0);
@@ -83,12 +81,13 @@ function start(){
 	
 	gl.viewport(0, 0, canvas.width, canvas.height);
 	gl.enable(gl.DEPTH_TEST);
-	gl.frontFace(gl.CW);
 	gl.enable(gl.CULL_FACE);
+	gl.frontFace(gl.CW);
+	
 	
 	gl.enableVertexAttribArray(0);
 	gl.enableVertexAttribArray(1);
-	//gl.enableVertexAttribArray(2);
+	gl.enableVertexAttribArray(2);
 	
 	Common.projection_matrix = new Mat4();
 	Common.projection_matrix.projection(Common.zNear, Common.zFar, Common.fov, canvas.width / canvas.height);
@@ -97,7 +96,7 @@ function start(){
 	cannonTransform.setTranslationZ(10).setRotationY(90);
 	
 	thingsTransfrom = new Transform();
-	thingsTransfrom.setTranslationY(2).setTranslationZ(10).setRotationY(-90);
+	thingsTransfrom.setTranslationY(2).setTranslationZ(10).setRotationY(-50);
 	
 	initMeshes();
 	setupEvents();

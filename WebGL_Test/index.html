@@ -22,44 +22,45 @@
 		<script src="camera.js"></script>
 		
 		<script type="x-shader/x-vertex" id="world_vs">
-			precision highp float;
-			attribute vec3 position;
-			attribute vec2 texCoord;
-			
-			uniform mat4 projection_matrix;
-			uniform mat4 transform_matrix;
-			uniform mat4 camera_translation_matrix;
-			uniform mat4 camera_rotation_matrix;
-			
-			varying vec2 tc;
+precision highp float;
+attribute vec3 position;
+attribute vec2 texCoord;
+attribute vec3 normal;
 
-			mat4 transpose(mat4 inMatrix) {
-				vec4 i0 = inMatrix[0];
-				vec4 i1 = inMatrix[1];
-				vec4 i2 = inMatrix[2];
-				vec4 i3 = inMatrix[3];
+uniform mat4 projection_matrix;
+uniform mat4 transform_matrix;
+uniform mat4 camera_translation_matrix;
+uniform mat4 camera_rotation_matrix;
 
-				mat4 outMatrix = mat4(
-                	 vec4(i0.x, i1.x, i2.x, i3.x),
-   	          	   	 vec4(i0.y, i1.y, i2.y, i3.y),
- 	               	 vec4(i0.z, i1.z, i2.z, i3.z),
-                	 vec4(i0.w, i1.w, i2.w, i3.w)
-                );
-				return outMatrix;
-			}
+varying vec3 tc;
+
+mat4 transpose(mat4 inMatrix) {
+	vec4 i0 = inMatrix[0];
+	vec4 i1 = inMatrix[1];
+	vec4 i2 = inMatrix[2];
+	vec4 i3 = inMatrix[3];
+
+	mat4 outMatrix = mat4(
+         vec4(i0.x, i1.x, i2.x, i3.x),
+   	     vec4(i0.y, i1.y, i2.y, i3.y),
+ 	   	 vec4(i0.z, i1.z, i2.z, i3.z),
+         vec4(i0.w, i1.w, i2.w, i3.w)
+    );
+	return outMatrix;
+}
 			
-			void main(){
-				gl_Position = projection_matrix * (camera_rotation_matrix * camera_translation_matrix * transform_matrix * vec4(position, 1));
-
-				tc = gl_Position.xy;
-			}
+void main(){
+	gl_Position = projection_matrix * (camera_rotation_matrix * camera_translation_matrix) * transform_matrix * vec4(position, 1);
+	gl_Position.z = -gl_Position.z; // A hack. TODO remove the hack.
+	tc = normal;
+}
 		</script>
 		<script type="x-shader/x-fragment" id="world_fs">
-			precision mediump float;
-			varying vec2 tc;
-			void main() {
-				gl_FragColor = vec4(tc.x / 10.0, tc.y, 1,  1);
-			}
+precision highp float;
+varying vec3 tc;
+void main() {
+	gl_FragColor = vec4(tc,  1);
+}
 		</script>
 		
 		<script src="main.js"></script>
