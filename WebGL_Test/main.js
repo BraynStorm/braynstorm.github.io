@@ -1,13 +1,27 @@
+// Globals - General
 var gl;
 var canvas;
 var global_interval;
+var eventManager;
+var info = {"lol" : "lo2l"};
+var app;
 
+// Globals - Shaders
 var worldShader;
+
+// Transforms
 var transform;
 var transform1;
 var thingsTransfrom;
 var cannonTransform;
 
+// Controls
+var camera;
+var keyboard;
+var mouse;
+
+
+// The whole scene.
 var scene = [];
 
 Number.prototype.toRadians = function() {
@@ -47,6 +61,14 @@ var Common = {
 			gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, undefined);
 		},
 		
+		clamp: function(val, min, max){
+			return Math.max(Math.min(val, max), min);
+		},
+		
+		isClamped: function(val, min, max){
+			return val <= max && val >= min;
+		},
+		
 		killGame: function (){
 			window.clearInterval(global_interval);
 		}
@@ -57,7 +79,6 @@ var I = 0;
 
 function start(){
 	canvas = document.getElementById("canvas");
-	//canvas.width = document.width;
 	gl = canvas.getContext("webgl");
 	
 	gl.viewport(0, 0, canvas.width, canvas.height);
@@ -67,31 +88,83 @@ function start(){
 	
 	gl.enableVertexAttribArray(0);
 	gl.enableVertexAttribArray(1);
+	//gl.enableVertexAttribArray(2);
 	
 	Common.projection_matrix = new Mat4();
 	Common.projection_matrix.projection(Common.zNear, Common.zFar, Common.fov, canvas.width / canvas.height);
 	
-	
-	transform = new Transform();
-	transform.setTranslationZ(2.5);
-	
-	transform1 = new Transform();
-	transform1.setTranslationZ(2.51);
-	
 	cannonTransform = new Transform();
-	cannonTransform.setTranslationZ(10).setRotationX(10).setRotationY(90);
+	cannonTransform.setTranslationZ(10).setRotationY(90);
 	
 	thingsTransfrom = new Transform();
-	thingsTransfrom.setTranslationY(2).setTranslationZ(15).setRotationX(10).setRotationY(-90);
+	thingsTransfrom.setTranslationY(2).setTranslationZ(10).setRotationY(-90);
 	
 	initMeshes();
+	setupEvents();
+	mouse = new Mouse();
+	camera = new Camera();
+	keyboard = new Keyboard();
 	
 	worldShader = new Shader("world_vs", "world_fs");
 	worldShader.addUniform("transform_matrix");
 	worldShader.addUniform("projection_matrix");
+	worldShader.addUniform("camera_translation_matrix");
+	worldShader.addUniform("camera_rotation_matrix");
 	
 	global_interval = window.setInterval(renderScene, 1000.0 / 60.0);
 	
+}
+
+function setupEvents(){
+	eventManager = new EventManager();
+	var cnv = $("#canvas");
+	
+	cnv.on('mousedown', function (e){
+		e.preventDefault();
+		eventManager.fire('mousedown', {
+			button: e.button,
+			x : e.offsetX,
+			y : e.offsetY
+		});
+	});
+	
+	cnv.on('mouseup', function (e){
+		eventManager.fire('mouseup', {
+			button: e.button,
+			x : e.offsetX,
+			y : e.offsetY
+		});
+	});
+	
+	cnv.on('mousemove', function (e){
+		eventManager.fire('mousemove', {
+			e : e.button,
+			x : e.offsetX,
+			y : e.offsetY
+		});
+	});
+	
+	$(window).on('keydown', function (e){
+		eventManager.fire('keydown', {
+			ctrl : e.ctrlKey,
+			alt : e.altKey,
+			shift : e.shiftKey,
+			meta : e.meta,
+			keyCode : e.keyCode,
+			which : e.which
+		});
+	});
+	
+	$(window).on('keyup', function (e){
+		eventManager.fire('keyup', {
+			ctrl : e.ctrlKey,
+			alt : e.altKey,
+			shift : e.shiftKey,
+			meta : e.meta,
+			keyCode : e.keyCode,
+			which : e.which
+		});
+	})
 }
 
 function renderScene(){
@@ -100,17 +173,13 @@ function renderScene(){
 	
 	var val = I/60;
 	
+	camera.loop();
+	
 	worldShader.bind();
 	worldShader.setUniformMatrix("projection_matrix", Common.projection_matrix);
-	
-	//transform.setRotationZ(-val * 20);
-	//transform1.setRotationZ(val * 20);
-	
-	//transform1.setTranslationX(Math.cos(val * 2) * 4);
-	//transform1.setTranslationY(Math.sin(val * 2) * 4);
-	
+	camera.bind();
 	scene.forEach(function (v, k){
-		v.getTransform().setTranslationY(5 * Math.sin(val));
+		v.getTransform().setTranslationX(5 * Math.sin(val));
 		v.render();
 	});
 	
@@ -118,29 +187,8 @@ function renderScene(){
 }
 
 function initMeshes(){
-	var vboData = [
-		-1  , -1,  0,      0,    0,
-		 1  ,  1,  0,      0.5,  1,
-		 1  , -1,  0,      1,    0
-	];
-	
-	var iboData = [0, 1, 2];
-
-	var triangle = new Mesh();
-	triangle.setTransform(transform);
-	triangle.createFromArrays(vboData, iboData, false);
-	
-	var triangle2 = new Mesh();
-	triangle2.setTransform(transform1);
-	triangle2.createFromArrays(vboData, iboData, false);
-	
-	//scene.push(triangle);
-	//scene.push(triangle2);
-	
 	loadMeshFile("cannon.mesh", scene, cannonTransform);
 	loadMeshFile("justDakataThings.mesh", scene, thingsTransfrom);
-	
-	
 }
 
 function loadMeshFile(filename, container, transform){
@@ -158,6 +206,5 @@ function loadMeshFile(filename, container, transform){
 		}
 	});
 }
-
 
 $(document).ready(start);

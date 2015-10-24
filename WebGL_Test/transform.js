@@ -2,7 +2,7 @@ var Transform = (function (){
 	function Transform(){
 		var translation = new Vec3();
 		var rotation = new Vec3();
-		var scale = new Vec3(1,1,1);
+		var scale = new Vec3(1, 1, 1);
 		
 		var matrix = new Mat4();
 		
@@ -36,7 +36,7 @@ var Transform = (function (){
 		
 		this.setTranslation = function (v) { translation = v; markDirty(); return this; };
 		this.setRotation = function (r) { rotation = r; markDirty(); return this; };
-		this.setScale = function (s) { scale = s; markDirty(); return this; };
+		this.setScale = function (s) { if(s instanceof Vec3) scale = s; else scale = new Vec3(s, s, s); markDirty(); return this; };
 		
 		this.setTranslationX = function(x){ translation.x = x; markDirty(); return this; };
 		this.setTranslationY = function(y){ translation.y = y; markDirty(); return this; };

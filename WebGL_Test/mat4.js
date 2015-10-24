@@ -50,6 +50,8 @@ var Mat4 = (function(){
 			m[0][1] = 0;					m[1][1] = 1;					m[2][1] = 0;						m[3][1] = 0;
 			m[0][2] = 0;					m[1][2] = 0;					m[2][2] = 1;						m[3][2] = 0;
 			m[0][3] = t.x;					m[1][3] = t.y;					m[2][3] = t.z;						m[3][3] = 1;
+			
+			return this;
 		};
 		
 		this.scale = function(s){
@@ -57,6 +59,8 @@ var Mat4 = (function(){
 			m[0][1] = 0;					m[1][1] = s.y;					m[2][1] = 0;						m[3][1] = 0;
 			m[0][2] = 0;					m[1][2] = 0;					m[2][2] = s.z;						m[3][2] = 0;
 			m[0][3] = 0;					m[1][3] = 0;					m[2][3] = 0;						m[3][3] = 1;
+			
+			return this;
 		};
 		
 		this.rotate = function(r){
@@ -91,15 +95,16 @@ var Mat4 = (function(){
 		}
 		
 		this.camera = function (forward, up){
-			var f = forward.getNormalized();
-			var r = up.getNormalized();
-			r = r.cross(f);
-			var u = f.cross(r);
+			var f = forward;
+			var r = up.getCrossed(f);
+			var u = f.getCrossed(r); // TODO unneccessary? (==u)
 			
-			m[0][0] = r.x;				m[0][1] = r.y;				m[0][2] = r.z;				m[0][3] = 0;
-			m[1][0] = u.x;				m[1][1] = u.y;				m[1][2] = u.z;				m[1][3] = 0;
-			m[2][0] = f.x;				m[2][1] = f.y;				m[2][2] = f.z;				m[2][3] = 0;
-			m[3][0] = 0;				m[3][1] = 0;				m[3][2] = 0;				m[3][3] = 1;
+			m[0][0] = r.x;				m[1][0] = u.x;				m[2][0] = f.x;				m[3][0] = 0;
+			m[0][1] = r.y;				m[1][1] = u.y;				m[2][1] = f.y;				m[3][1] = 0;
+			m[0][2] = r.z;				m[1][2] = u.z;				m[2][2] = f.z;				m[3][2] = 0;
+			m[0][3] = 0;				m[1][3] = 0;				m[2][3] = 0;				m[3][3] = 1;
+			
+			return this;
 		}
 		
 		this.set = function(x, y, value) {
