@@ -62,6 +62,9 @@ var Camera = (function() {
 			if(respectLimits === true){
 				
 				if (!Common.isClamped(angle + xRot, Camera.MIN_XROT, Camera.MAX_XROT)){
+					if(angle === 0)
+						return;
+					
 					if(angle > 0){
 						angle = Camera.MAX_XROT - xRot
 					}else{
@@ -71,21 +74,38 @@ var Camera = (function() {
 				
 			}
 			
-			if(angle === 0)
-				return;
+			
+			/*
+			if (!Common.isClamped(angle + xRot, Camera.MIN_XROT, Camera.MAX_XROT)){
+				angle = -angle;
+				xRot = -xRot;
+				
+				forward.x = -forward.x;
+				forward.z = -forward.z;
+				up.x = -up.x;
+				up.z = -up.z;
+				
+				console.log('UNCLAMP')
+			}
+			*/
 			
 			xRot += angle;
 			
-			
 			var horizontalAxis = Camera.Y_AXIS.getCrossed(forward).normalize();
+			
 			console.log(horizontalAxis)
+			
 			forward.rotate(angle, horizontalAxis).normalize();
-			up = forward.getCrossed(horizontalAxis).normalize();
+			//up = forward.getCrossed(horizontalAxis).normalize();
+			
+			if(up.y < 0)
+				up.y = -up.y;
+			
 			markDirty();
 		};
 		
 		var rotateY = function (angle){
-			if(angle === 0)
+			if(Math.abs(angle) - 0.01 <= 0)
 				return;
 			
 			yRot += angle;
@@ -93,14 +113,10 @@ var Camera = (function() {
 			var horizontalAxis = Camera.Y_AXIS.getCrossed(forward).normalize();
 			
 			forward.rotate(angle, Camera.Y_AXIS).normalize();
-			//console.log(forward);
-			//console.log(["Normalize F", forward.getCrossed(horizontalAxis)]);
 			up = forward.getCrossed(horizontalAxis).normalize();
-			//console.log(up);
-			//console.log(["Angle", angle]);
-			//console.log(["Forward", forward.x, forward.y, forward.z]);
-			//console.log(["Up", up.x, up.y, up.z]);
-			//console.log(horizontalAxis)
+			
+			if(up.y < 0)
+				up.y = -up.y;
 			
 			markDirty();
 		}
@@ -109,11 +125,16 @@ var Camera = (function() {
 			lastMousePos = mouse.getLastClickPoint();
 		}
 		
+		this.setAngle = function (lol){
+			rotateX(lol);
+		}
+		
 		this.mouseMove = function (e){
 			if(mouse.getMouseState() === 0){
 				if(lastMousePos !== undefined){
-					rotateX((lastMousePos.y - mouse.getY()), false);
-					rotateY((lastMousePos.x - mouse.getX()));
+					rotateY((lastMousePos.x - mouse.getX()) / 5);
+					rotateX((lastMousePos.y - mouse.getY()) / 5, false);
+					
 				}
 				
 				lastMousePos.x = mouse.getX();
@@ -134,8 +155,8 @@ var Camera = (function() {
 	
 	Camera.Y_AXIS = new Vec3(0, 1, 0);
 	
-	Camera.MIN_XROT = -89;
-	Camera.MAX_XROT = 89;
+	Camera.MIN_XROT = -89.0;
+	Camera.MAX_XROT =  89.0;
 	
 	
 	return Camera;

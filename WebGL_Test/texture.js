@@ -10,28 +10,38 @@ var Texture = (function() {
 		var id = id;
 		var width = w;
 		var height = h;
-				
-		this.setMagFilter = function (v){
+		
+		/**
+		 * @param filter Default gl.LINEAR
+		 */
+		this.setMagFilter = function (filter){
+			var filter = filter || gl.LINEAR;
 			gl.bindTexture(gl.TEXTURE_2D, id);
-			
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, filter);
 			gl.bindTexture(gl.TEXTURE_2D, undefined);
 		}
 		
-		this.setMinFilter = function (v){
+		/**
+		 * @param v Default gl.LINEAR_MIPMAP_NEAREST
+		 */
+		this.setMinFilter = function (filter){
+			var filter = filter || gl.LINEAR_MIPMAP_NEAREST;
 			gl.bindTexture(gl.TEXTURE_2D, id);
-			
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, filter);
 			gl.bindTexture(gl.TEXTURE_2D, undefined);
 		}
 		
-		this.setRepeatX= function (v){
+		this.setRepeatX= function (wrap){
+			var wrap = wrap || gl.REPEAT;
 			gl.bindTexture(gl.TEXTURE_2D, id);
-			
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, wrap);
 			gl.bindTexture(gl.TEXTURE_2D, undefined);
 		}
 		
-		this.setRepeatY = function (v){
+		this.setRepeatY = function (wrap){
+			var wrap = wrap || gl.REPEAT;
 			gl.bindTexture(gl.TEXTURE_2D, id);
-			
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, wrap);
 			gl.bindTexture(gl.TEXTURE_2D, undefined);
 		}
 	}

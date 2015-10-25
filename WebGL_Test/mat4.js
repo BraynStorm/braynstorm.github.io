@@ -20,7 +20,7 @@ var Mat4 = (function(){
 		
 		this.projection = function(zNear, zFar, fov, aspect){
 			var zRange = zNear - zFar;
-			var tanHalfFOV = Math.tan(fov/2.0);
+			var tanHalfFOV = Math.tan(toRadians(fov/2));
 			
 			m[0][0] = 1.0 / (aspect * tanHalfFOV);	m[1][0] = 0;					m[2][0] = 0;							m[3][0] = 0;
 			m[0][1] = 0;							m[1][1] = 1.0 / tanHalfFOV;		m[2][1] = 0;							m[3][1] = 0;

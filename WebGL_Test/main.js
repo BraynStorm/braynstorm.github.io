@@ -37,12 +37,11 @@ var scene = [];
 var frames = 1;
 var passedTime = 0;
 
-Number.prototype.toRadians = function() {
-	return this * Math.PI / 180;
+function toRadians(v){
+	return v * Math.PI / 180;
 }
-
 var Common = {
-		fov : 65,
+		fov : 95,
 		zNear : 0.0001,
 		zFar : 1000.0,
 		
@@ -87,7 +86,7 @@ var Common = {
 };
 
 var I = 0;
-info['fps'] = "asdasd";
+
 function start(){
 	canvas = document.getElementById("canvas");
 	gl = canvas.getContext("webgl");
@@ -123,7 +122,7 @@ function start(){
 	worldShader.addUniform("camera_rotation_matrix");
 	
 	timer.loop();
-	global_interval = window.setInterval(renderScene, 1000.0 / 900.0);
+	global_interval = window.setInterval(renderScene, 1000.0 / 60.0);
 	
 }
 
@@ -209,7 +208,6 @@ function renderScene(){
 		info.fps = frames / (passedTime / 1000);
 		passedTime = 0;
 		frames = 0;
-		console.log(info.fps);
 	}
 	
 	timer.loop();

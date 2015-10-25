@@ -114,8 +114,7 @@ var Vec3 = (function(){
 	}
 	
 	Vec3.prototype.rotate = function(angle, axis){
-		angle = (angle/2) * Math.PI / 180;
-		
+		angle = toRadians(angle / 2);
 		var sinHalfAngle = Math.sin(angle);
 		var cosHalfAngle = Math.cos(angle);
 		
@@ -145,9 +144,9 @@ var Vec3 = (function(){
 	
 	Vec3.prototype.getRadianized = function(){
 		return new Vec3(
-				(this.x).toRadians(),
-				(this.y).toRadians(),
-				(this.z).toRadians()
+				toRadians(this.x),
+				toRadians(this.y),
+				toRadians(this.z)
 		);
 	}
 	
