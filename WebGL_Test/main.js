@@ -5,7 +5,7 @@ var global_interval;
 var timer;
 
 var info = {"lol" : "lo2l"};
-var filenamePattern = /(?:.*[\/\\])?(.*)\.(.*)/ig;
+var filenamePattern = /(?:.*[\/\\])?(.*)\.(.*)/i;
 
 //Globals - AngularJS
 var app;
@@ -13,6 +13,8 @@ var app;
 // Globals - Managers
 var eventManager;
 var textureManager;
+
+var DEFAULT_TEXTURE;
 
 
 // Globals - Shaders
@@ -44,6 +46,10 @@ var Common = {
 		fov : 95,
 		zNear : 0.0001,
 		zFar : 1000.0,
+		
+		defaultArg: function (obj, defObj){
+			return (obj === undefined) ? defObj : obj;
+		},
 		
 		bufferData : function (data, bufferType, dynamic){
 			bufferType = bufferType || gl.ARRAY_BUFFER;
@@ -111,11 +117,12 @@ function start(){
 	cannonTransform.setTranslationZ(10).setRotationY(90);
 	
 	thingsTransfrom = new Transform();
-	thingsTransfrom.setTranslationY(2).setTranslationZ(10).setRotationY(-90);
+	thingsTransfrom.setTranslationY(3).setTranslationZ(10).setRotationY(-90);
 	
 	initMeshes();
 	
 	worldShader = new Shader("world_vs", "world_fs");
+	worldShader.addUniform("sampler");
 	worldShader.addUniform("transform_matrix");
 	worldShader.addUniform("projection_matrix");
 	worldShader.addUniform("camera_translation_matrix");
@@ -135,6 +142,8 @@ function setup(){
 	mouse = new Mouse();
 	keyboard = new Keyboard();
 	camera = new Camera();
+	
+	DEFAULT_TEXTURE = textureManager.getTexture("default.png");
 	
 	var cnv = $("#canvas");
 	
@@ -215,10 +224,12 @@ function renderScene(){
 
 function initMeshes(){
 	loadMeshFile("cannon.mesh", scene, cannonTransform);
-	loadMeshFile("justDakataThings.mesh", scene, thingsTransfrom);
+	loadMeshFile("justDakataThings.mesh", scene, thingsTransfrom, function (THIS) {
+		THIS.getTransform().setRotationY(I);
+	});
 }
 
-function loadMeshFile(filename, container, transform){
+function loadMeshFile(filename, container, transform, cb){
 	if(!filename.endsWith(".mesh"))
 		filename += ".mesh";
 	
@@ -229,6 +240,7 @@ function loadMeshFile(filename, container, transform){
 			var obj = new Mesh();
 			obj.createFromMeshFile(data);
 			obj.setTransform( transform || new Transform() );
+			obj.setRenderCallback(cb);
 			container.push(obj);
 		}
 	});

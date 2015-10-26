@@ -1,30 +1,29 @@
 var TextureManager = (function() {
 	function TextureManager() {
 		var map = {};
-		
-		this.loadTexture = function(srcLink, options){
-			var texID = gl.createTexture();
-			var img = new Image();
+
+		this.getTexture = function (name, activeTexture){
 			
-			img.onload = function (){
-				gl.bindTexture(gl.TEXTURE_2D, texID);
-				gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
-				gl.bindTexture(gl.TEXTURE_2D, undefined);
-				
-				console.log(img);
-				var tex = new Texture(texID, img.width, img.height, options);
+			if(name === undefined){
+				return DEFAULT_TEXTURE;
 			}
 			
-			/*
-			 * gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-				gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
-				
-				gl.generateMipmap(gl.TEXTURE_2D);
-			 */
-			img.src = srcLink;
+			name = 'img/textures/' + name;
+			var imgName = name.match(filenamePattern);
+			if(imgName === null || imgName[1] === null || imgName[1].length < 1)
+				name += '.png';
 			
+			if(map[name] === undefined){
+				var t = new Texture();
+				t.load(name, activeTexture);
+				map[name] = t;
+			}
+			
+			return map[name];
 		}
 	}
+	
+	
 	
 	return TextureManager;
 })();

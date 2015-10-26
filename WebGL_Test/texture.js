@@ -1,53 +1,82 @@
 var Texture = (function() {
-	function Texture(id, w, h, options) {
-		var options = {
-				filterMag : options.filterMag || gl.LINEAR,
-				filterMin : options.filterMin || gl.LINEAR_MIPMAP_NEAREST,
-				repeatX : options.repeatX || gl.REPEAT,
-				repeatY : options.repeatY || gl.REPEAT,
-		};
+	function Texture(opts, activeTexture) {
+		opts = Common.defaultArg(opts, {});
+		activeTexture = Common.defaultArg(activeTexture, gl.TEXTURE0);
 		
-		var id = id;
-		var width = w;
-		var height = h;
+		var options = [];
+		options[activeTexture] = {
+				filterMag : Common.defaultArg(opts.filterMag, gl.LINEAR),
+				filterMin : Common.defaultArg(opts.filterMin, gl.LINEAR),
+				repeatX : Common.defaultArg(opts.repeatX, gl.CLAMP_TO_EDGE),
+				repeatY : Common.defaultArg(opts.repeatY, gl.CLAMP_TO_EDGE),
+		}
 		
-		/**
-		 * @param filter Default gl.LINEAR
-		 */
-		this.setMagFilter = function (filter){
-			var filter = filter || gl.LINEAR;
+		var id = undefined;
+		
+		this.bind = function (activeTexture){
 			gl.bindTexture(gl.TEXTURE_2D, id);
-			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, filter);
+			gl.activeTexture(Common.defaultArg(activeTexture, gl.TEXTURE0));
+		}
+		
+		this.load = function (name, activeTexture){
+			var img = new Image();
+			var THIS = this;
+			
+			if(gl.isTexture(id) !== true){
+				id = gl.createTexture();
+			}
+			
+			img.src = name;
+			img.onload = function (){
+				gl.bindTexture(gl.TEXTURE_2D, id);
+				gl.activeTexture(Common.defaultArg(activeTexture, gl.TEXTURE0));
+				gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+				THIS.setOptions(options, activeTexture)
+				gl.bindTexture(gl.TEXTURE_2D, undefined);
+			}
+			
+			img.onerror = function (){
+				console.log(img.src);
+				id = DEFAULT_TEXTURE.getID();
+				THIS.setOptions(DEFAULT_TEXTURE.getOptions());
+			}
+		}
+		
+		this.setOptions = function (opts, activeTexture){
+			activeTexture = Common.defaultArg(activeTexture, gl.TEXTURE0);
+			
+			options[activeTexture] = {
+					filterMag : Common.defaultArg(opts.filterMag, options[activeTexture].filterMag),
+					filterMin : Common.defaultArg(opts.filterMin, options[activeTexture].filterMin),
+					repeatX : Common.defaultArg(opts.repeatX, options[activeTexture].repeatX),
+					repeatY : Common.defaultArg(opts.repeatY, options[activeTexture].repeatY),
+			};
+			
+			this.bind(activeTexture);
+			
+			console.log(opts);
+			
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, options[activeTexture].filterMin);
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, options[activeTexture].filterMag);
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, options[activeTexture].repeatX);
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, options[activeTexture].repeatY);
+			
 			gl.bindTexture(gl.TEXTURE_2D, undefined);
 		}
 		
-		/**
-		 * @param v Default gl.LINEAR_MIPMAP_NEAREST
-		 */
-		this.setMinFilter = function (filter){
-			var filter = filter || gl.LINEAR_MIPMAP_NEAREST;
-			gl.bindTexture(gl.TEXTURE_2D, id);
-			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, filter);
-			gl.bindTexture(gl.TEXTURE_2D, undefined);
+		this.getID = function (){
+			return id;
 		}
 		
-		this.setRepeatX= function (wrap){
-			var wrap = wrap || gl.REPEAT;
-			gl.bindTexture(gl.TEXTURE_2D, id);
-			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, wrap);
-			gl.bindTexture(gl.TEXTURE_2D, undefined);
-		}
-		
-		this.setRepeatY = function (wrap){
-			var wrap = wrap || gl.REPEAT;
-			gl.bindTexture(gl.TEXTURE_2D, id);
-			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, wrap);
-			gl.bindTexture(gl.TEXTURE_2D, undefined);
+		this.getOptions = function (){
+			return options;
 		}
 	}
 	
 	
+	Texture.bind = function (tex, activeTexture){
+		Common.defaultArg(tex, DEFAULT_TEXTURE).bind(activeTexture);
+	}
 	
-
 	return Texture;
 })();

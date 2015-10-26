@@ -3,9 +3,11 @@ var Mesh = (function (){
 		var vbo = undefined;
 		var ibo = undefined;
 		var drawCount = 0;
+		var texture = undefined;
 		var transform = new Transform();
 		var hasNormals = false;
 	
+		var renderCb = function () {};
 	
 		this.createFromMeshFile = function (json){
 			var data = JSON.parse(json);
@@ -36,12 +38,25 @@ var Mesh = (function (){
 				faces.push(data.faces[i][2]);
 			}
 			
+			if(data.material.map_Kd !== undefined){
+				var name = data.material.map_Kd.match(filenamePattern.match);
+				if(name[1] === undefined || name[1].length() < 1)
+					data.material.map_Kd += '.png';
+			}
+				
+			
+			texture = textureManager.getTexture(data.material.map_Kd, gl.TEXTURE0);
+			
 			vbo = Common.bufferData(bufferData);
 			ibo = Common.bufferData(faces, gl.ELEMENT_ARRAY_BUFFER);
 			drawCount = faces.length;
 			
 			return this;
 		};
+		
+		this.setRenderCallback = function (cb){
+			renderCb = Common.defaultArg(cb, function () {});
+		}
 		
 		this.createFromArrays = function (vertices, indices, HasNormals){
 			vbo = Common.bufferData(vertices);
@@ -65,6 +80,9 @@ var Mesh = (function (){
 		}
 		
 		this.render = function (){
+			renderCb(this);
+			Texture.bind(texture);
+			worldShader.setUniform1i("sampler", 0);
 			worldShader.setUniformMatrix("transform_matrix", transform.getTransformationMatrix());
 			Common.renderMesh(vbo, ibo, drawCount);
 		};

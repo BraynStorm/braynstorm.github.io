@@ -35,7 +35,7 @@ uniform mat4 transform_matrix;
 uniform mat4 camera_translation_matrix;
 uniform mat4 camera_rotation_matrix;
 
-varying vec3 tc;
+varying vec2 tc;
 
 mat4 transpose(mat4 inMatrix) {
 	vec4 i0 = inMatrix[0];
@@ -53,15 +53,20 @@ mat4 transpose(mat4 inMatrix) {
 }
 			
 void main(){
-	gl_Position = projection_matrix * ( camera_translation_matrix * camera_rotation_matrix) * transform_matrix * vec4(position, 1);
-	tc = normal;
+	gl_Position = projection_matrix * camera_rotation_matrix * camera_translation_matrix * transform_matrix * vec4(position, 1);
+	tc = texCoord;
 }
 		</script>
 		<script type="x-shader/x-fragment" id="world_fs">
 precision highp float;
-varying vec3 tc;
+uniform sampler2D sampler;
+varying vec2 tc;
 void main() {
-	gl_FragColor = vec4(tc,  1);
+	vec4 texel = texture2D(sampler, tc);
+	//if(texel.w == 0)
+	//	discard;
+	//else
+		gl_FragColor = texel;
 }
 		</script>
 		
